@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The Guild</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#111827" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <h1>The Guild</h1>
+      <p class="subtitle">Complete quests. Earn points. Claim rewards.</p>
+    </section>
+
+    <section class="card points-card">
+      <p class="label">Total Points</p>
+      <p id="pointsTotal" class="points">0</p>
+    </section>
+
+    <section class="card">
+      <h2>Quick Log</h2>
+
+      <div class="button-grid">
+        <button data-activity="Run 1 Mile" data-points="100">+ Run 1 Mile</button>
+        <button data-activity="Walk 1 Mile" data-points="40">+ Walk 1 Mile</button>
+        <button data-activity="Lift Workout" data-points="150">+ Lift Workout</button>
+        <button data-activity="Kettlebell Workout" data-points="200">+ Kettlebell Workout</button>
+        <button data-activity="Stretch 10 Min" data-points="25">+ Stretch 10 Min</button>
+        <button data-activity="Protein Goal" data-points="50">+ Protein Goal</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Rewards</h2>
+
+      <div class="reward">
+        <div>
+          <strong>Coffee</strong>
+          <p>150 points</p>
+        </div>
+        <button data-reward="Coffee" data-cost="150">Claim</button>
+      </div>
+
+      <div class="reward">
+        <div>
+          <strong>D&D Mini</strong>
+          <p>750 points</p>
+        </div>
+        <button data-reward="D&D Mini" data-cost="750">Claim</button>
+      </div>
+
+      <div class="reward">
+        <div>
+          <strong>New Game</strong>
+          <p>2000 points</p>
+        </div>
+        <button data-reward="New Game" data-cost="2000">Claim</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="history-header">
+        <h2>History</h2>
+        <button id="clearHistoryButton" class="small-button">Clear</button>
+      </div>
+
+      <ul id="historyList" class="history-list"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
