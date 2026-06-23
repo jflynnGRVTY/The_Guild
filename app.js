@@ -7,21 +7,26 @@ const totalEarnedTextElement = document.getElementById("totalEarnedText");
 const xpFillElement = document.getElementById("xpFill");
 const nextLevelTextElement = document.getElementById("nextLevelText");
 
+const levelUpModalElement = document.getElementById("levelUpModal");
+const levelUpTitleElement = document.getElementById("levelUpTitle");
+const levelUpMessageElement = document.getElementById("levelUpMessage");
+const closeLevelUpModalButton = document.getElementById("closeLevelUpModal");
+
 let points = Number(localStorage.getItem("theGuildPoints")) || 0;
 let totalEarned = Number(localStorage.getItem("theGuildTotalEarned")) || 0;
 let history = JSON.parse(localStorage.getItem("theGuildHistory")) || [];
 
 const LEVELS = [
   { level: 1, title: "Adventurer", requiredGold: 0 },
-  { level: 2, title: "Apprentice", requiredGold: 5000 },
-  { level: 3, title: "Scout", requiredGold: 12500 },
-  { level: 4, title: "Mercenary", requiredGold: 22500 },
-  { level: 5, title: "Knight", requiredGold: 35000 },
-  { level: 6, title: "Champion", requiredGold: 50000 },
-  { level: 7, title: "Hero", requiredGold: 67500 },
-  { level: 8, title: "Warden", requiredGold: 87500 },
-  { level: 9, title: "Legend", requiredGold: 110000 },
-  { level: 10, title: "Guildmaster", requiredGold: 135000 }
+  { level: 2, title: "Apprentice", requiredGold: 500 },
+  { level: 3, title: "Scout", requiredGold: 1250 },
+  { level: 4, title: "Mercenary", requiredGold: 2250 },
+  { level: 5, title: "Knight", requiredGold: 3500 },
+  { level: 6, title: "Champion", requiredGold: 5000 },
+  { level: 7, title: "Hero", requiredGold: 6750 },
+  { level: 8, title: "Warden", requiredGold: 8750 },
+  { level: 9, title: "Legend", requiredGold: 11000 },
+  { level: 10, title: "Guildmaster", requiredGold: 13500 }
 ];
 
 function saveData() {
@@ -44,6 +49,13 @@ function getCurrentLevel() {
 
 function getNextLevel(currentLevel) {
   return LEVELS.find((level) => level.requiredGold > currentLevel.requiredGold);
+}
+
+function showLevelUpModal(newLevel) {
+  levelUpTitleElement.textContent = `Level ${newLevel.level} ${newLevel.title}`;
+  levelUpMessageElement.textContent = `You have reached the rank of ${newLevel.title}.`;
+
+  levelUpModalElement.classList.remove("hidden");
 }
 
 function updateLevelDisplay() {
@@ -109,9 +121,18 @@ function addHistory(text) {
 }
 
 function logActivity(activityName, activityPoints) {
+  const oldLevel = getCurrentLevel();
+
   points += activityPoints;
   totalEarned += activityPoints;
+
+  const newLevel = getCurrentLevel();
+
   addHistory(`${activityName}: +${activityPoints} gold`);
+
+  if (newLevel.level > oldLevel.level) {
+    showLevelUpModal(newLevel);
+  }
 }
 
 function claimReward(rewardName, rewardCost) {
@@ -155,6 +176,10 @@ clearHistoryButton.addEventListener("click", () => {
 
   saveData();
   updateScreen();
+});
+
+closeLevelUpModalButton.addEventListener("click", () => {
+  levelUpModalElement.classList.add("hidden");
 });
 
 updateScreen();
