@@ -14,24 +14,62 @@
   <main class="app">
     <section class="hero">
       <h1>The Guild</h1>
-      <p class="subtitle">Complete quests. Earn points. Claim rewards.</p>
+      <p class="subtitle">Complete daily quests. Earn gold. Claim rewards.</p>
     </section>
 
     <section class="card points-card">
-      <p class="label">Total Points</p>
+      <p class="label">Guild Gold</p>
       <p id="pointsTotal" class="points">0</p>
+
+      <div class="level-panel">
+        <div class="level-row">
+          <span id="levelTitle">Level 1 Adventurer</span>
+          <span id="totalEarnedText">0 lifetime gold</span>
+        </div>
+
+        <div class="xp-bar">
+          <div id="xpFill" class="xp-fill"></div>
+        </div>
+
+        <p id="nextLevelText" class="next-level-text">500 gold until Level 2</p>
+      </div>
     </section>
 
     <section class="card">
-      <h2>Quick Log</h2>
+      <h2>Quests</h2>
 
       <div class="button-grid">
-        <button data-activity="Run 1 Mile" data-points="100">+ Run 1 Mile</button>
-        <button data-activity="Walk 1 Mile" data-points="40">+ Walk 1 Mile</button>
-        <button data-activity="Lift Workout" data-points="150">+ Lift Workout</button>
-        <button data-activity="Kettlebell Workout" data-points="200">+ Kettlebell Workout</button>
-        <button data-activity="Stretch 10 Min" data-points="25">+ Stretch 10 Min</button>
-        <button data-activity="Protein Goal" data-points="50">+ Protein Goal</button>
+        <button data-activity="Run 1 Mile" data-points="100">
+          🏃 Run 1 Mile <span>+100 gold</span>
+        </button>
+
+        <button data-activity="Walk 1 Mile" data-points="40">
+          🚶 Walk 1 Mile <span>+40 gold</span>
+        </button>
+
+        <button data-activity="Lift Workout" data-points="150">
+          🏋️ Lift Workout <span>+150 gold</span>
+        </button>
+
+        <button data-activity="Kettlebell Quest" data-points="200">
+          ⚔️ Kettlebell Quest <span>+200 gold</span>
+        </button>
+
+        <button data-activity="Stretch 10 Min" data-points="25">
+          🧘 Stretch 10 Min <span>+25 gold</span>
+        </button>
+
+        <button data-activity="Protein Goal" data-points="50">
+          🍗 Hit Protein Goal <span>+50 gold</span>
+        </button>
+
+        <button data-activity="Water Goal" data-points="30">
+          💧 Hit Water Goal <span>+30 gold</span>
+        </button>
+
+        <button data-activity="Sleep Goal" data-points="50">
+          🌙 Sleep Goal <span>+50 gold</span>
+        </button>
       </div>
     </section>
 
@@ -40,32 +78,48 @@
 
       <div class="reward">
         <div>
-          <strong>Coffee</strong>
-          <p>150 points</p>
+          <strong>Guild Coffee</strong>
+          <p>150 gold</p>
         </div>
-        <button data-reward="Coffee" data-cost="150">Claim</button>
+        <button data-reward="Guild Coffee" data-cost="150">Claim</button>
       </div>
 
       <div class="reward">
         <div>
           <strong>D&D Mini</strong>
-          <p>750 points</p>
+          <p>750 gold</p>
         </div>
         <button data-reward="D&D Mini" data-cost="750">Claim</button>
       </div>
 
       <div class="reward">
         <div>
+          <strong>New Gym Shirt</strong>
+          <p>1500 gold</p>
+        </div>
+        <button data-reward="New Gym Shirt" data-cost="1500">Claim</button>
+      </div>
+
+      <div class="reward">
+        <div>
           <strong>New Game</strong>
-          <p>2000 points</p>
+          <p>2000 gold</p>
         </div>
         <button data-reward="New Game" data-cost="2000">Claim</button>
+      </div>
+
+      <div class="reward">
+        <div>
+          <strong>D&D Terrain or Minis</strong>
+          <p>2500 gold</p>
+        </div>
+        <button data-reward="D&D Terrain or Minis" data-cost="2500">Claim</button>
       </div>
     </section>
 
     <section class="card">
       <div class="history-header">
-        <h2>History</h2>
+        <h2>Quest History</h2>
         <button id="clearHistoryButton" class="small-button">Clear</button>
       </div>
 
@@ -76,3 +130,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+    
