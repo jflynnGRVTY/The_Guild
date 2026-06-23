@@ -13,15 +13,15 @@ let history = JSON.parse(localStorage.getItem("theGuildHistory")) || [];
 
 const LEVELS = [
   { level: 1, title: "Adventurer", requiredGold: 0 },
-  { level: 2, title: "Apprentice", requiredGold: 500 },
-  { level: 3, title: "Scout", requiredGold: 1250 },
-  { level: 4, title: "Mercenary", requiredGold: 2250 },
-  { level: 5, title: "Knight", requiredGold: 3500 },
-  { level: 6, title: "Champion", requiredGold: 5000 },
-  { level: 7, title: "Hero", requiredGold: 6750 },
-  { level: 8, title: "Warden", requiredGold: 8750 },
-  { level: 9, title: "Legend", requiredGold: 11000 },
-  { level: 10, title: "Guildmaster", requiredGold: 13500 }
+  { level: 2, title: "Apprentice", requiredGold: 5000 },
+  { level: 3, title: "Scout", requiredGold: 12500 },
+  { level: 4, title: "Mercenary", requiredGold: 22500 },
+  { level: 5, title: "Knight", requiredGold: 35000 },
+  { level: 6, title: "Champion", requiredGold: 50000 },
+  { level: 7, title: "Hero", requiredGold: 67500 },
+  { level: 8, title: "Warden", requiredGold: 87500 },
+  { level: 9, title: "Legend", requiredGold: 110000 },
+  { level: 10, title: "Guildmaster", requiredGold: 135000 }
 ];
 
 function saveData() {
