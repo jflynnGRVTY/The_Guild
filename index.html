@@ -8,11 +8,35 @@
 
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.webmanifest" />
+
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
   <meta name="theme-color" content="#111827" />
+  <meta name="apple-mobile-web-app-title" content="The Guild" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
 <body>
+  <div class="side-decor side-decor-left">
+    <img src="icons/icon-192.png" alt="" />
+    <div class="rune-card">STR</div>
+    <div class="rune-card">END</div>
+  </div>
+
+  <div class="side-decor side-decor-right">
+    <img src="icons/icon-512.png" alt="" />
+    <div class="rune-card">GLD</div>
+    <div class="rune-card">LVL</div>
+  </div>
+
   <main class="app">
     <section class="hero">
+      <div class="hero-icon-row">
+        <img src="icons/icon-192.png" alt="The Guild dumbbell icon" />
+        <img src="icons/icon-512.png" alt="The Guild sword icon" />
+      </div>
+
       <h1>The Guild</h1>
       <p class="subtitle">Complete daily quests. Earn gold. Claim rewards.</p>
     </section>
@@ -36,45 +60,53 @@
     </section>
 
     <section class="card">
-      <h2>Quests</h2>
+      <h2 class="section-title">Quests</h2>
 
       <div class="button-grid">
         <button data-activity="Run 1 Mile" data-points="100">
-          🏃 Run 1 Mile <span>+100 gold</span>
+          <span class="quest-name">🏃 Run 1 Mile</span>
+          <span class="quest-points">+100 gold</span>
         </button>
 
         <button data-activity="Walk 1 Mile" data-points="40">
-          🚶 Walk 1 Mile <span>+40 gold</span>
+          <span class="quest-name">🚶 Walk 1 Mile</span>
+          <span class="quest-points">+40 gold</span>
         </button>
 
         <button data-activity="Lift Workout" data-points="150">
-          🏋️ Lift Workout <span>+150 gold</span>
+          <span class="quest-name">🏋️ Lift Workout</span>
+          <span class="quest-points">+150 gold</span>
         </button>
 
         <button data-activity="Kettlebell Quest" data-points="200">
-          ⚔️ Kettlebell Quest <span>+200 gold</span>
+          <span class="quest-name">⚔️ Kettlebell Quest</span>
+          <span class="quest-points">+200 gold</span>
         </button>
 
         <button data-activity="Stretch 10 Min" data-points="25">
-          🧘 Stretch 10 Min <span>+25 gold</span>
+          <span class="quest-name">🧘 Stretch 10 Min</span>
+          <span class="quest-points">+25 gold</span>
         </button>
 
         <button data-activity="Protein Goal" data-points="50">
-          🍗 Hit Protein Goal <span>+50 gold</span>
+          <span class="quest-name">🍗 Hit Protein Goal</span>
+          <span class="quest-points">+50 gold</span>
         </button>
 
         <button data-activity="Water Goal" data-points="30">
-          💧 Hit Water Goal <span>+30 gold</span>
+          <span class="quest-name">💧 Hit Water Goal</span>
+          <span class="quest-points">+30 gold</span>
         </button>
 
         <button data-activity="Sleep Goal" data-points="50">
-          🌙 Sleep Goal <span>+50 gold</span>
+          <span class="quest-name">🌙 Sleep Goal</span>
+          <span class="quest-points">+50 gold</span>
         </button>
       </div>
     </section>
 
     <section class="card">
-      <h2>Rewards</h2>
+      <h2 class="section-title">Rewards</h2>
 
       <div class="reward">
         <div>
@@ -119,13 +151,19 @@
 
     <section class="card">
       <div class="history-header">
-        <h2>Quest History</h2>
+        <h2 class="section-title">Quest History</h2>
         <button id="clearHistoryButton" class="small-button">Clear</button>
       </div>
 
       <ul id="historyList" class="history-list"></ul>
     </section>
   </main>
+
+  <div id="toast" class="toast hidden">
+    <p id="toastKicker">Quest Complete</p>
+    <strong id="toastTitle">Hell yeah!</strong>
+    <span id="toastMessage">+100 gold</span>
+  </div>
 
   <div id="levelUpModal" class="modal hidden">
     <div class="confetti-layer">
