@@ -26,6 +26,11 @@ const totalQuestsTextElement = document.getElementById("totalQuestsText");
 const daysActiveTextElement = document.getElementById("daysActiveText");
 const topQuestTextElement = document.getElementById("topQuestText");
 
+const rankBadgeImageElement = document.getElementById("rankBadgeImage");
+const rankBadgeLevelElement = document.getElementById("rankBadgeLevel");
+const rankBadgeTitleElement = document.getElementById("rankBadgeTitle");
+const rankBadgeDescriptionElement = document.getElementById("rankBadgeDescription");
+
 let points = Number(localStorage.getItem("theGuildPoints")) || 0;
 let totalEarned = Number(localStorage.getItem("theGuildTotalEarned")) || 0;
 let history = JSON.parse(localStorage.getItem("theGuildHistory")) || [];
@@ -53,37 +58,66 @@ const LEVELS = [
   { level: 10, title: "Guildmaster", requiredGold: 200000 }
 ];
 
-const ABILITIES = [
-  {
-    key: "strength",
-    shortName: "STR",
-    name: "Strength"
+const BADGES = {
+  1: {
+    src: "badges/recruit.png",
+    title: "New Recruit",
+    description: "A plain guild shield issued to new members."
   },
-  {
-    key: "dexterity",
-    shortName: "DEX",
-    name: "Dexterity"
+  2: {
+    src: "badges/initiate.png",
+    title: "Guild Initiate",
+    description: "The recruit shield strengthened with crossed blades."
   },
-  {
-    key: "constitution",
-    shortName: "CON",
-    name: "Constitution"
+  3: {
+    src: "badges/apprentice.png",
+    title: "Apprentice Adventurer",
+    description: "An upgraded crest with improved steelwork and a first emerald setting."
   },
-  {
-    key: "intelligence",
-    shortName: "INT",
-    name: "Intelligence"
+  4: {
+    src: "badges/scout.png",
+    title: "Questing Scout",
+    description: "A field-tested badge with refined trim and early ornamentation."
   },
-  {
-    key: "wisdom",
-    shortName: "WIS",
-    name: "Wisdom"
+  5: {
+    src: "badges/mercenary.png",
+    title: "Iron Mercenary",
+    description: "A heavier iron crest built for reliable, repeated victories."
   },
-  {
-    key: "charisma",
-    shortName: "CHA",
-    name: "Charisma"
+  6: {
+    src: "badges/knight.png",
+    title: "Oathbound Knight",
+    description: "A polished knightly badge with gold detailing and sharper blades."
+  },
+  7: {
+    src: "badges/champion.png",
+    title: "Guild Champion",
+    description: "A champion’s crest with laurels, gems, and ornate guild metalwork."
+  },
+  8: {
+    src: "badges/hero.png",
+    title: "Hero of the Hall",
+    description: "A heroic badge framed with wings, laurels, and emerald power."
+  },
+  9: {
+    src: "badges/legend.png",
+    title: "Living Legend",
+    description: "A legendary crest crackling with green arcane force."
+  },
+  10: {
+    src: "badges/guildmaster.png",
+    title: "Guildmaster",
+    description: "The crowned master crest, blazing with the full power of the guild."
   }
+};
+
+const ABILITIES = [
+  { key: "strength", shortName: "STR", name: "Strength" },
+  { key: "dexterity", shortName: "DEX", name: "Dexterity" },
+  { key: "constitution", shortName: "CON", name: "Constitution" },
+  { key: "intelligence", shortName: "INT", name: "Intelligence" },
+  { key: "wisdom", shortName: "WIS", name: "Wisdom" },
+  { key: "charisma", shortName: "CHA", name: "Charisma" }
 ];
 
 const ABILITY_XP_BY_QUEST = {
@@ -343,6 +377,17 @@ function updateQuestCountDisplay() {
   });
 }
 
+function updateBadgeDisplay() {
+  const currentLevel = getCurrentLevel();
+  const badge = BADGES[currentLevel.level] || BADGES[1];
+
+  rankBadgeImageElement.src = badge.src;
+  rankBadgeImageElement.alt = `${badge.title} badge`;
+  rankBadgeLevelElement.textContent = `Level ${currentLevel.level}`;
+  rankBadgeTitleElement.textContent = badge.title;
+  rankBadgeDescriptionElement.textContent = badge.description;
+}
+
 function updateRecordDisplay() {
   const currentLevel = getCurrentLevel();
   const topQuest = getTopQuest();
@@ -385,6 +430,7 @@ function updateScreen() {
   updateAbilityScoreDisplay();
   updateQuestCountDisplay();
   updateRecordDisplay();
+  updateBadgeDisplay();
   updateHistoryDisplay();
 }
 
