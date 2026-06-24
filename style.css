@@ -13,6 +13,8 @@
   --green-bright: #6ea06e;
   --gold: #d4b066;
   --gold-dark: #7c5b1c;
+  --cream: #f6edd8;
+  --cream-soft: #dfe6d8;
   --stone: #374151;
   --text: #f8fafc;
   --muted: #94a3b8;
@@ -101,7 +103,7 @@ button,
 #levelTitle,
 .modal-kicker,
 .side-title,
-.attribute-score,
+.ability-score,
 .record-box strong {
   font-family: "Cinzel", Georgia, serif;
 }
@@ -118,7 +120,7 @@ h1 {
 
 .subtitle {
   margin-top: 8px;
-  color: #dfe6d8;
+  color: var(--cream-soft);
   font-size: 1.05rem;
 }
 
@@ -220,18 +222,18 @@ h1 {
 }
 
 .xp-bar,
-.attribute-bar {
+.ability-bar {
   width: 100%;
   height: 15px;
   background: #152219;
   border-radius: 999px;
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 8px;
   border: 1px solid #27422c;
 }
 
 .xp-fill,
-.attribute-fill {
+.ability-fill {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, #2f5a35, #6ea06e, #b8d8a8);
@@ -257,7 +259,7 @@ button {
   border: 0;
   border-radius: 14px;
   padding: 14px 16px;
-  color: white;
+  color: var(--cream);
   font-size: 0.95rem;
   font-weight: 800;
   cursor: pointer;
@@ -271,23 +273,29 @@ button:active {
   transform: scale(0.98);
 }
 
+.button-grid button,
+.reward button {
+  background:
+    linear-gradient(135deg, #355d35, #4f7c4f) !important;
+  border: 1px solid rgba(184, 216, 168, 0.22);
+  color: var(--cream) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 2px 8px rgba(31, 58, 36, 0.18);
+}
+
 .button-grid button {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-align: left;
   gap: 12px;
-  background:
-    linear-gradient(135deg, rgba(42, 76, 42, 0.96), rgba(63, 107, 63, 0.96));
-  border: 1px solid rgba(184, 216, 168, 0.18);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 2px 8px rgba(31, 58, 36, 0.12);
 }
 
-.button-grid button:hover {
-  filter: brightness(1.06);
-  box-shadow: 0 0 16px rgba(63, 107, 63, 0.2);
+.button-grid button:hover,
+.reward button:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 16px rgba(63, 107, 63, 0.26);
 }
 
 .button-grid button.button-pop,
@@ -296,11 +304,11 @@ button:active {
 }
 
 .quest-name {
-  color: #f7f4ed;
+  color: var(--cream) !important;
 }
 
 .quest-points {
-  color: #d7f0d2;
+  color: #d7f0d2 !important;
   font-size: 0.82rem;
   white-space: nowrap;
 }
@@ -334,7 +342,7 @@ button:active {
 }
 
 .reward strong {
-  color: #f6edd8;
+  color: var(--cream);
   font-size: 1.05rem;
 }
 
@@ -345,9 +353,6 @@ button:active {
 
 .reward button {
   width: auto;
-  background:
-    linear-gradient(135deg, #355d35, #4f7c4f);
-  border: 1px solid rgba(184, 216, 168, 0.18);
 }
 
 .history-header {
@@ -361,7 +366,7 @@ button:active {
   padding: 8px 12px;
   font-size: 0.8rem;
   background:
-    linear-gradient(135deg, #39513d, #2a3a2e);
+    linear-gradient(135deg, #39513d, #2a3a2e) !important;
 }
 
 .history-list {
@@ -384,59 +389,52 @@ button:active {
   color: var(--muted);
 }
 
-.attribute-list {
+/* Ability score panel */
+
+.ability-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.attribute-card {
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(55, 65, 81, 0.55);
+.ability-card {
+  padding: 10px;
+  border: 1px solid rgba(184, 216, 168, 0.12);
+  border-radius: 14px;
+  background: rgba(7, 17, 11, 0.24);
 }
 
-.attribute-card:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
-
-.attribute-top {
+.ability-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
 
-.attribute-name {
-  color: #eef3e8;
+.ability-top span {
+  color: var(--cream);
   font-weight: 800;
 }
 
-.attribute-short-name {
+.ability-top span strong {
   display: inline-flex;
   justify-content: center;
   min-width: 42px;
-  margin-right: 6px;
+  margin-right: 5px;
   color: var(--gold);
   font-family: "Cinzel", Georgia, serif;
   font-weight: 900;
 }
 
-.attribute-score {
+.ability-score {
   color: var(--gold);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 900;
 }
 
-.attribute-detail {
-  margin-top: 4px;
+.ability-card p {
+  margin: 5px 0 0;
   color: var(--muted);
-  font-size: 0.82rem;
-}
-
-.attribute-gain {
-  margin-top: 4px;
-  color: var(--green-soft);
   font-size: 0.82rem;
 }
 
