@@ -38,7 +38,7 @@
       </div>
 
       <h1>The Guild</h1>
-      <p class="subtitle">Complete daily quests. Earn gold. Claim rewards.</p>
+      <p class="subtitle">Stack good habits. Complete quests. Earn your rewards.</p>
     </section>
 
     <section class="card points-card">
@@ -47,7 +47,7 @@
 
       <div class="level-panel">
         <div class="level-row">
-          <span id="levelTitle">Level 1 Adventurer</span>
+          <span id="levelTitle">Level 1 New Recruit</span>
           <span id="totalEarnedText">0 lifetime gold</span>
         </div>
 
@@ -55,7 +55,7 @@
           <div id="xpFill" class="xp-fill"></div>
         </div>
 
-        <p id="nextLevelText" class="next-level-text">500 gold until Level 2</p>
+        <p id="nextLevelText" class="next-level-text">5000 gold until Level 2</p>
       </div>
     </section>
 
@@ -63,6 +63,16 @@
       <h2 class="section-title">Quests</h2>
 
       <div class="button-grid">
+        <button data-activity="Kettlebell Quest" data-points="200">
+          <span class="quest-name">⚔️ Kettlebell Quest</span>
+          <span class="quest-points">+200 gold</span>
+        </button>
+
+        <button data-activity="Targeted Workout" data-points="100">
+          <span class="quest-name">🎯 Targeted Workout</span>
+          <span class="quest-points">+100 gold</span>
+        </button>
+
         <button data-activity="Run 1 Mile" data-points="100">
           <span class="quest-name">🏃 Run 1 Mile</span>
           <span class="quest-points">+100 gold</span>
@@ -73,21 +83,6 @@
           <span class="quest-points">+40 gold</span>
         </button>
 
-        <button data-activity="Lift Workout" data-points="150">
-          <span class="quest-name">🏋️ Lift Workout</span>
-          <span class="quest-points">+150 gold</span>
-        </button>
-
-        <button data-activity="Kettlebell Quest" data-points="200">
-          <span class="quest-name">⚔️ Kettlebell Quest</span>
-          <span class="quest-points">+200 gold</span>
-        </button>
-
-        <button data-activity="Stretch 10 Min" data-points="25">
-          <span class="quest-name">🧘 Stretch 10 Min</span>
-          <span class="quest-points">+25 gold</span>
-        </button>
-
         <button data-activity="Protein Goal" data-points="50">
           <span class="quest-name">🍗 Hit Protein Goal</span>
           <span class="quest-points">+50 gold</span>
@@ -96,6 +91,11 @@
         <button data-activity="Water Goal" data-points="30">
           <span class="quest-name">💧 Hit Water Goal</span>
           <span class="quest-points">+30 gold</span>
+        </button>
+
+        <button data-activity="Stretch 10 Min" data-points="25">
+          <span class="quest-name">🧘 Stretch 10 Min</span>
+          <span class="quest-points">+25 gold</span>
         </button>
 
         <button data-activity="Sleep Goal" data-points="50">
@@ -111,41 +111,41 @@
       <div class="reward">
         <div>
           <strong>Guild Coffee</strong>
-          <p>150 gold</p>
+          <p>1500 gold</p>
         </div>
-        <button data-reward="Guild Coffee" data-cost="150">Claim</button>
+        <button data-reward="Guild Coffee" data-cost="1500">Claim</button>
       </div>
 
       <div class="reward">
         <div>
           <strong>D&D Mini</strong>
-          <p>750 gold</p>
+          <p>7500 gold</p>
         </div>
-        <button data-reward="D&D Mini" data-cost="750">Claim</button>
+        <button data-reward="D&D Mini" data-cost="7500">Claim</button>
       </div>
 
       <div class="reward">
         <div>
           <strong>New Gym Shirt</strong>
-          <p>1500 gold</p>
+          <p>15000 gold</p>
         </div>
-        <button data-reward="New Gym Shirt" data-cost="1500">Claim</button>
+        <button data-reward="New Gym Shirt" data-cost="15000">Claim</button>
       </div>
 
       <div class="reward">
         <div>
           <strong>New Game</strong>
-          <p>2000 gold</p>
+          <p>20000 gold</p>
         </div>
-        <button data-reward="New Game" data-cost="2000">Claim</button>
+        <button data-reward="New Game" data-cost="20000">Claim</button>
       </div>
 
       <div class="reward">
         <div>
           <strong>D&D Terrain or Minis</strong>
-          <p>2500 gold</p>
+          <p>25000 gold</p>
         </div>
-        <button data-reward="D&D Terrain or Minis" data-cost="2500">Claim</button>
+        <button data-reward="D&D Terrain or Minis" data-cost="25000">Claim</button>
       </div>
     </section>
 
@@ -183,7 +183,7 @@
 
     <div class="modal-card">
       <p class="modal-kicker">Level Up!</p>
-      <h2 id="levelUpTitle">Level 2 Apprentice</h2>
+      <h2 id="levelUpTitle">Level 2 Guild Initiate</h2>
       <p id="levelUpMessage">Your guild rank has increased.</p>
       <button id="closeLevelUpModal">Continue</button>
     </div>
@@ -192,4 +192,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-    
