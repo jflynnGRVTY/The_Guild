@@ -12,21 +12,36 @@ const levelUpTitleElement = document.getElementById("levelUpTitle");
 const levelUpMessageElement = document.getElementById("levelUpMessage");
 const closeLevelUpModalButton = document.getElementById("closeLevelUpModal");
 
+const toastElement = document.getElementById("toast");
+const toastTitleElement = document.getElementById("toastTitle");
+const toastMessageElement = document.getElementById("toastMessage");
+
 let points = Number(localStorage.getItem("theGuildPoints")) || 0;
 let totalEarned = Number(localStorage.getItem("theGuildTotalEarned")) || 0;
 let history = JSON.parse(localStorage.getItem("theGuildHistory")) || [];
 
+let toastTimer;
+
 const LEVELS = [
   { level: 1, title: "Adventurer", requiredGold: 0 },
-  { level: 2, title: "Apprentice", requiredGold: 500 },
-  { level: 3, title: "Scout", requiredGold: 1250 },
-  { level: 4, title: "Mercenary", requiredGold: 2250 },
-  { level: 5, title: "Knight", requiredGold: 3500 },
-  { level: 6, title: "Champion", requiredGold: 5000 },
-  { level: 7, title: "Hero", requiredGold: 6750 },
-  { level: 8, title: "Warden", requiredGold: 8750 },
-  { level: 9, title: "Legend", requiredGold: 11000 },
-  { level: 10, title: "Guildmaster", requiredGold: 13500 }
+  { level: 2, title: "Apprentice", requiredGold: 5000 },
+  { level: 3, title: "Scout", requiredGold: 12500 },
+  { level: 4, title: "Mercenary", requiredGold: 22500 },
+  { level: 5, title: "Knight", requiredGold: 35000 },
+  { level: 6, title: "Champion", requiredGold: 50000 },
+  { level: 7, title: "Hero", requiredGold: 67500 },
+  { level: 8, title: "Warden", requiredGold: 87500 },
+  { level: 9, title: "Legend", requiredGold: 110000 },
+  { level: 10, title: "Guildmaster", requiredGold: 135000 }
+];
+
+const QUEST_MESSAGES = [
+  "Hell yeah!",
+  "Quest complete!",
+  "Nice work!",
+  "The guild approves.",
+  "Another victory.",
+  "Progress forged."
 ];
 
 function saveData() {
@@ -56,6 +71,33 @@ function showLevelUpModal(newLevel) {
   levelUpMessageElement.textContent = `You have reached the rank of ${newLevel.title}.`;
 
   levelUpModalElement.classList.remove("hidden");
+}
+
+function showToast(activityName, activityPoints) {
+  const randomMessage = QUEST_MESSAGES[Math.floor(Math.random() * QUEST_MESSAGES.length)];
+
+  toastTitleElement.textContent = randomMessage;
+  toastMessageElement.textContent = `${activityName}: +${activityPoints} gold`;
+
+  toastElement.classList.remove("hidden");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    toastElement.classList.add("hidden");
+  }, 1800);
+}
+
+function animateButton(button) {
+  button.classList.remove("button-pop");
+
+  void button.offsetWidth;
+
+  button.classList.add("button-pop");
+
+  setTimeout(() => {
+    button.classList.remove("button-pop");
+  }, 320);
 }
 
 function updateLevelDisplay() {
@@ -129,6 +171,7 @@ function logActivity(activityName, activityPoints) {
   const newLevel = getCurrentLevel();
 
   addHistory(`${activityName}: +${activityPoints} gold`);
+  showToast(activityName, activityPoints);
 
   if (newLevel.level > oldLevel.level) {
     showLevelUpModal(newLevel);
@@ -150,6 +193,7 @@ document.querySelectorAll("[data-activity]").forEach((button) => {
     const activityName = button.dataset.activity;
     const activityPoints = Number(button.dataset.points);
 
+    animateButton(button);
     logActivity(activityName, activityPoints);
   });
 });
@@ -159,6 +203,7 @@ document.querySelectorAll("[data-reward]").forEach((button) => {
     const rewardName = button.dataset.reward;
     const rewardCost = Number(button.dataset.cost);
 
+    animateButton(button);
     claimReward(rewardName, rewardCost);
   });
 });
