@@ -23,25 +23,27 @@ let history = JSON.parse(localStorage.getItem("theGuildHistory")) || [];
 let toastTimer;
 
 const LEVELS = [
-  { level: 1, title: "Adventurer", requiredGold: 0 },
-  { level: 2, title: "Apprentice", requiredGold: 5000 },
-  { level: 3, title: "Scout", requiredGold: 12500 },
-  { level: 4, title: "Mercenary", requiredGold: 22500 },
-  { level: 5, title: "Knight", requiredGold: 35000 },
-  { level: 6, title: "Champion", requiredGold: 50000 },
-  { level: 7, title: "Hero", requiredGold: 67500 },
-  { level: 8, title: "Warden", requiredGold: 87500 },
-  { level: 9, title: "Legend", requiredGold: 110000 },
-  { level: 10, title: "Guildmaster", requiredGold: 135000 }
+  { level: 1, title: "New Recruit", requiredGold: 0 },
+  { level: 2, title: "Guild Initiate", requiredGold: 5000 },
+  { level: 3, title: "Apprentice Adventurer", requiredGold: 12000 },
+  { level: 4, title: "Questing Scout", requiredGold: 22000 },
+  { level: 5, title: "Iron Mercenary", requiredGold: 35000 },
+  { level: 6, title: "Oathbound Knight", requiredGold: 52000 },
+  { level: 7, title: "Guild Champion", requiredGold: 75000 },
+  { level: 8, title: "Hero of the Hall", requiredGold: 105000 },
+  { level: 9, title: "Living Legend", requiredGold: 145000 },
+  { level: 10, title: "Guildmaster", requiredGold: 200000 }
 ];
 
 const QUEST_MESSAGES = [
   "Hell yeah!",
   "Quest complete!",
-  "Fuckin A right.",
+  "Nice work!",
   "The guild approves.",
   "Another victory.",
-  "Progress forged."
+  "Progress forged.",
+  "Discipline pays.",
+  "Gold earned."
 ];
 
 function saveData() {
