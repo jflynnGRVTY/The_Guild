@@ -1,4 +1,4 @@
-const CACHE_NAME = "the-guild-v5";
+const CACHE_NAME = "the-guild-v6";
 
 const FILES_TO_CACHE = [
   "./",
