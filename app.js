@@ -16,7 +16,7 @@ const toastElement = document.getElementById("toast");
 const toastTitleElement = document.getElementById("toastTitle");
 const toastMessageElement = document.getElementById("toastMessage");
 
-const attributeStatsListElement = document.getElementById("attributeStatsList");
+const abilityScoresListElement = document.getElementById("abilityScoresList");
 const questCountListElement = document.getElementById("questCountList");
 
 const currentGoldTextElement = document.getElementById("currentGoldText");
@@ -30,7 +30,7 @@ let points = Number(localStorage.getItem("theGuildPoints")) || 0;
 let totalEarned = Number(localStorage.getItem("theGuildTotalEarned")) || 0;
 let history = JSON.parse(localStorage.getItem("theGuildHistory")) || [];
 let questCounts = JSON.parse(localStorage.getItem("theGuildQuestCounts")) || {};
-let attributeXp = JSON.parse(localStorage.getItem("theGuildAttributeXp")) || {};
+let abilityXp = JSON.parse(localStorage.getItem("theGuildAbilityXp")) || {};
 let firstUseDate = localStorage.getItem("theGuildFirstUseDate");
 
 if (!firstUseDate) {
@@ -53,46 +53,40 @@ const LEVELS = [
   { level: 10, title: "Guildmaster", requiredGold: 200000 }
 ];
 
-const ATTRIBUTE_CONFIG = [
+const ABILITIES = [
   {
     key: "strength",
-    name: "Strength",
     shortName: "STR",
-    description: "Power, lifting, force, heavy training."
+    name: "Strength"
   },
   {
     key: "dexterity",
-    name: "Dexterity",
     shortName: "DEX",
-    description: "Mobility, speed, balance, flexibility."
+    name: "Dexterity"
   },
   {
     key: "constitution",
-    name: "Constitution",
     shortName: "CON",
-    description: "Endurance, recovery, hydration, resilience."
+    name: "Constitution"
   },
   {
     key: "intelligence",
-    name: "Intelligence",
     shortName: "INT",
-    description: "Reading, learning, study, problem solving."
+    name: "Intelligence"
   },
   {
     key: "wisdom",
-    name: "Wisdom",
     shortName: "WIS",
-    description: "Rest, discipline, awareness, consistency."
+    name: "Wisdom"
   },
   {
     key: "charisma",
-    name: "Charisma",
     shortName: "CHA",
-    description: "Confidence, completion, leadership, presence."
+    name: "Charisma"
   }
 ];
 
-const ATTRIBUTE_XP_BY_QUEST = {
+const ABILITY_XP_BY_QUEST = {
   "Kettlebell Quest": {
     strength: 120,
     constitution: 80
@@ -150,10 +144,10 @@ const QUEST_MESSAGES = [
   "Gold earned."
 ];
 
-function ensureAttributeDefaults() {
-  ATTRIBUTE_CONFIG.forEach((attribute) => {
-    if (typeof attributeXp[attribute.key] !== "number") {
-      attributeXp[attribute.key] = 0;
+function ensureAbilityDefaults() {
+  ABILITIES.forEach((ability) => {
+    if (typeof abilityXp[ability.key] !== "number") {
+      abilityXp[ability.key] = 0;
     }
   });
 }
@@ -163,7 +157,7 @@ function saveData() {
   localStorage.setItem("theGuildTotalEarned", String(totalEarned));
   localStorage.setItem("theGuildHistory", JSON.stringify(history));
   localStorage.setItem("theGuildQuestCounts", JSON.stringify(questCounts));
-  localStorage.setItem("theGuildAttributeXp", JSON.stringify(attributeXp));
+  localStorage.setItem("theGuildAbilityXp", JSON.stringify(abilityXp));
   localStorage.setItem("theGuildFirstUseDate", firstUseDate);
 }
 
@@ -183,14 +177,21 @@ function getNextLevel(currentLevel) {
   return LEVELS.find((level) => level.requiredGold > currentLevel.requiredGold);
 }
 
-function getAttributeScore(attributeKey) {
-  const xp = attributeXp[attributeKey] || 0;
+function getAbilityScore(abilityKey) {
+  const xp = abilityXp[abilityKey] || 0;
   return 10 + Math.floor(xp / 1000);
 }
 
-function getAttributeProgress(attributeKey) {
-  const xp = attributeXp[attributeKey] || 0;
-  return Math.min(((xp % 1000) / 1000) * 100, 100);
+function getAbilityProgressPercent(abilityKey) {
+  const xp = abilityXp[abilityKey] || 0;
+  const xpIntoCurrentPoint = xp % 1000;
+
+  return Math.min((xpIntoCurrentPoint / 1000) * 100, 100);
+}
+
+function getAbilityXpIntoCurrentPoint(abilityKey) {
+  const xp = abilityXp[abilityKey] || 0;
+  return xp % 1000;
 }
 
 function getTotalQuestCompletions() {
@@ -221,8 +222,8 @@ function getDaysActive() {
   return Math.max(days, 1);
 }
 
-function formatAttributeGain(attributeGain) {
-  const entries = Object.entries(attributeGain || {});
+function formatAbilityGain(abilityGain) {
+  const entries = Object.entries(abilityGain || {});
 
   if (entries.length === 0) {
     return "";
@@ -230,8 +231,8 @@ function formatAttributeGain(attributeGain) {
 
   return entries
     .map(([key, value]) => {
-      const attribute = ATTRIBUTE_CONFIG.find((item) => item.key === key);
-      const label = attribute ? attribute.shortName : key.toUpperCase();
+      const ability = ABILITIES.find((item) => item.key === key);
+      const label = ability ? ability.shortName : key.toUpperCase();
 
       return `${label} +${value} XP`;
     })
@@ -245,9 +246,9 @@ function showLevelUpModal(newLevel) {
   levelUpModalElement.classList.remove("hidden");
 }
 
-function showToast(activityName, activityPoints, attributeGain) {
+function showToast(activityName, activityPoints, abilityGain) {
   const randomMessage = QUEST_MESSAGES[Math.floor(Math.random() * QUEST_MESSAGES.length)];
-  const statText = formatAttributeGain(attributeGain);
+  const statText = formatAbilityGain(abilityGain);
 
   toastTitleElement.textContent = randomMessage;
   toastMessageElement.textContent = statText
@@ -296,34 +297,30 @@ function updateLevelDisplay() {
   nextLevelTextElement.textContent = `${nextLevel.requiredGold - totalEarned} gold until Level ${nextLevel.level}`;
 }
 
-function updateAttributeDisplay() {
-  attributeStatsListElement.innerHTML = "";
+function updateAbilityScoreDisplay() {
+  abilityScoresListElement.innerHTML = "";
 
-  ATTRIBUTE_CONFIG.forEach((attribute) => {
-    const xp = attributeXp[attribute.key] || 0;
-    const score = getAttributeScore(attribute.key);
-    const progress = getAttributeProgress(attribute.key);
-    const xpIntoScore = xp % 1000;
-    const xpToNext = 1000 - xpIntoScore;
+  ABILITIES.forEach((ability) => {
+    const totalXp = abilityXp[ability.key] || 0;
+    const score = getAbilityScore(ability.key);
+    const progressPercent = getAbilityProgressPercent(ability.key);
+    const xpIntoCurrentPoint = getAbilityXpIntoCurrentPoint(ability.key);
 
     const card = document.createElement("div");
-    card.className = "attribute-card";
+    card.className = "ability-card";
 
     card.innerHTML = `
-      <div class="attribute-top">
-        <span class="attribute-name">
-          <span class="attribute-short-name">${attribute.shortName}</span>${attribute.name}
-        </span>
-        <span class="attribute-score">${score}</span>
+      <div class="ability-top">
+        <span><strong>${ability.shortName}</strong>${ability.name}</span>
+        <strong class="ability-score">${score}</strong>
       </div>
-      <div class="attribute-bar">
-        <div class="attribute-fill" style="width: ${progress}%"></div>
+      <div class="ability-bar">
+        <div class="ability-fill" style="width: ${progressPercent}%"></div>
       </div>
-      <div class="attribute-detail">${xp} XP total · ${xpToNext === 1000 ? 1000 : xpToNext} XP to next point</div>
-      <div class="attribute-gain">${attribute.description}</div>
+      <p>${xpIntoCurrentPoint} / 1000 XP · ${totalXp} total XP</p>
     `;
 
-    attributeStatsListElement.appendChild(card);
+    abilityScoresListElement.appendChild(card);
   });
 }
 
@@ -385,7 +382,7 @@ function updateScreen() {
   pointsTotalElement.textContent = points;
 
   updateLevelDisplay();
-  updateAttributeDisplay();
+  updateAbilityScoreDisplay();
   updateQuestCountDisplay();
   updateRecordDisplay();
   updateHistoryDisplay();
@@ -411,14 +408,14 @@ function addHistory(text) {
   updateScreen();
 }
 
-function applyAttributeXp(activityName) {
-  const attributeGain = ATTRIBUTE_XP_BY_QUEST[activityName] || {};
+function applyAbilityXp(activityName) {
+  const abilityGain = ABILITY_XP_BY_QUEST[activityName] || {};
 
-  Object.entries(attributeGain).forEach(([attributeKey, xpGain]) => {
-    attributeXp[attributeKey] += xpGain;
+  Object.entries(abilityGain).forEach(([abilityKey, xpGain]) => {
+    abilityXp[abilityKey] += xpGain;
   });
 
-  return attributeGain;
+  return abilityGain;
 }
 
 function logActivity(activityName, activityPoints) {
@@ -429,9 +426,9 @@ function logActivity(activityName, activityPoints) {
 
   questCounts[activityName] = (questCounts[activityName] || 0) + 1;
 
-  const attributeGain = applyAttributeXp(activityName);
+  const abilityGain = applyAbilityXp(activityName);
   const newLevel = getCurrentLevel();
-  const statText = formatAttributeGain(attributeGain);
+  const statText = formatAbilityGain(abilityGain);
 
   if (statText) {
     addHistory(`${activityName}: +${activityPoints} gold · ${statText}`);
@@ -439,7 +436,7 @@ function logActivity(activityName, activityPoints) {
     addHistory(`${activityName}: +${activityPoints} gold`);
   }
 
-  showToast(activityName, activityPoints, attributeGain);
+  showToast(activityName, activityPoints, abilityGain);
 
   if (newLevel.level > oldLevel.level) {
     showLevelUpModal(newLevel);
@@ -487,10 +484,10 @@ clearHistoryButton.addEventListener("click", () => {
   totalEarned = 0;
   history = [];
   questCounts = {};
-  attributeXp = {};
+  abilityXp = {};
   firstUseDate = new Date().toISOString();
 
-  ensureAttributeDefaults();
+  ensureAbilityDefaults();
   saveData();
   updateScreen();
 });
@@ -499,7 +496,7 @@ closeLevelUpModalButton.addEventListener("click", () => {
   levelUpModalElement.classList.add("hidden");
 });
 
-ensureAttributeDefaults();
+ensureAbilityDefaults();
 saveData();
 updateScreen();
 
