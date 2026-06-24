@@ -38,7 +38,7 @@ const LEVELS = [
 const QUEST_MESSAGES = [
   "Hell yeah!",
   "Quest complete!",
-  "Nice work!",
+  "Fuckin A right.",
   "The guild approves.",
   "Another victory.",
   "Progress forged."
